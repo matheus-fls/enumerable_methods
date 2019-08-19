@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require './enumerables'
+require 'test/unit'
+extend Test::Unit::Assertions
 
 # Tests for my_each:
 
@@ -15,3 +17,16 @@ ex = [11, 22, 33]
 ex.my_each_with_index { |value, index| puts "value: #{value} index: #{index}" }
 
 my_hash.my_each_with_index { |key, value, index| puts "key: #{key} value: #{value} index: #{index}" }
+
+# Tests for my_select:
+
+numbers = [1, 2, 3, 4, 5]
+
+assert_equal(numbers.my_select { |number| number > 3 }, numbers.my_select { |number| number > 3 })
+puts(numbers.my_select { |number| number > 3 })
+
+puts(my_hash.my_select { |_key, value| value > 10 })
+
+# Tests for my_all?
+assert_equal(numbers.my_all? { |n| n > 0 }, numbers.all? { |n| n > 0 })
+puts(numbers.my_all? { |n| n > 0 })
