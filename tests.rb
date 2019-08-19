@@ -17,23 +17,23 @@ ex = [11, 22, 33]
 
 ex.my_each_with_index { |value, index| puts "value: #{value} index: #{index}" }
 
-my_hash.my_each_with_index { |key, value, index| puts "key: #{key} value: #{value} index: #{index}" }
+my_hash.my_each_with_index { |k, v, i| puts "k: #{k} v: #{v} i: #{i}" }
 puts
 
 # Tests for my_select:
 puts 'Tests for my_select:'
 numbers = [1, 2, 3, 4, 5]
 
-assert_equal(numbers.my_select { |number| number > 3 }, numbers.my_select { |number| number > 3 })
+assert_equal(numbers.my_select { |n| n > 3 }, numbers.my_select { |n| n > 3 })
 puts(numbers.my_select { |number| number > 3 })
 
 puts(my_hash.my_select { |_key, value| value > 10 })
 puts
 
 # Tests for my_all?
-assert_equal(numbers.my_all? { |n| n > 0 }, numbers.all? { |n| n > 0 })
+assert_equal(numbers.my_all? { |n| n > 1 }, numbers.all? { |n| n > 1 })
 puts 'Tests for my_all: '
-puts(numbers.my_all? { |n| n > 0 })
+puts(numbers.my_all? { |n| n > 1 })
 puts
 
 # Tests for my_any?
@@ -41,3 +41,18 @@ assert_equal(numbers.my_any? { |n| n == 3 }, numbers.any? { |n| n == 3 })
 puts 'Tests for my_any?: '
 puts(numbers.my_any? { |n| n == 3 })
 puts
+
+# Tests for my_none?
+assert_equal(numbers.my_none? { |n| n == 3 }, numbers.none? { |n| n == 3 })
+puts 'Tests for my_none?:'
+puts(numbers.my_none? { |n| n == 3 })
+puts(numbers.my_none? { |n| n == 11 })
+puts
+
+# Tests for my_count
+assert_equal(numbers.my_count, numbers.count)
+puts 'Tests for my_count:'
+numbers << 2
+puts(numbers.my_count)
+puts(numbers.my_count(2))
+puts(numbers.my_count { |n| (n % 2).zero? })
