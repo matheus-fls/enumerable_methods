@@ -25,8 +25,8 @@ puts 'Tests for my_select:'
 numbers = [1, 2, 3, 4, 5]
 
 assert_equal(numbers.my_select { |n| n > 3 }, numbers.my_select { |n| n > 3 })
-puts(numbers.my_select { |number| number > 3 })
-
+print(numbers.my_select { |number| number > 3 })
+puts
 puts(my_hash.my_select { |_key, value| value > 10 })
 puts
 
@@ -56,3 +56,8 @@ numbers << 2
 puts(numbers.my_count)
 puts(numbers.my_count(2))
 puts(numbers.my_count { |n| (n % 2).zero? })
+
+# Tests for my_map
+puts 'Tests for my_map:'
+print(numbers.my_map { |n| n * n })
+puts

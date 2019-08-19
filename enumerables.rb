@@ -86,4 +86,15 @@ module Enumerable
       my_array.length
     end
   end
+
+  def my_map
+    my_array = to_a
+    cont = 0
+    result = []
+    while cont < length
+      result << yield(*my_array[cont])
+      cont += 1
+    end
+    result
+  end
 end
