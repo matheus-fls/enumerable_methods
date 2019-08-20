@@ -66,7 +66,7 @@ module Enumerable
     result.length.zero?
   end
 
-  def my_count(value=nil)
+  def my_count(value = nil)
     my_array = to_a
     cont = 0
     result = []
@@ -96,5 +96,19 @@ module Enumerable
       cont += 1
     end
     result
+  end
+
+  def my_inject(memo = nil)
+    my_array = to_a
+    cont = 0
+    if memo.nil?
+      memo = my_array[0]
+      cont += 1
+    end
+    while cont < my_array.length
+      memo = yield(memo, *my_array[cont])
+      cont += 1
+    end
+    memo
   end
 end

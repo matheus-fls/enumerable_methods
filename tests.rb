@@ -61,3 +61,23 @@ puts(numbers.my_count { |n| (n % 2).zero? })
 puts 'Tests for my_map:'
 print(numbers.my_map { |n| n * n })
 puts
+print((1..4).to_a.map { |i| i * i })
+puts
+
+# Tests for my_inject
+puts 'Tests for my inject:'
+print((5..10).to_a.my_inject { |sum, n| sum + n }, "\n")
+print((5..10).to_a.my_inject(1) { |product, n| product * n }, "\n")
+longest = %w[cat sheep bear].my_inject do |memo, word|
+  memo.length > word.length ? memo : word
+end
+print(longest, "\n")
+
+# Multiply elements method
+def multiply_els(array)
+  array.my_inject { |memo, val| val * memo }
+end
+
+# Tests for multiply_els
+puts 'Tests for multiply_els:'
+print(multiply_els([2, 4, 5]), "\n")
