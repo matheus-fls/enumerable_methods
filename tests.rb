@@ -2,7 +2,7 @@
 
 require './enumerables'
 require 'test/unit'
-extend Test::Unit::Assertions
+extend Test::Unit::Assertions # rubocop:disable Style/MixinUsage
 
 # Tests for my_each:
 puts 'Tests for my_each:'
@@ -58,6 +58,7 @@ puts(numbers.my_count(2))
 puts(numbers.my_count { |n| (n % 2).zero? })
 
 # Tests for my_map
+assert_equal(numbers.my_map { |n| n * n }, numbers.map { |n| n * n})
 puts 'Tests for my_map:'
 print(numbers.my_map { |n| n * n })
 puts
@@ -65,6 +66,7 @@ print((1..4).to_a.map { |i| i * i })
 puts
 
 # Tests for my_inject
+assert_equal((5..10).to_a.my_inject { |sum, n| sum + n }, (5..10).to_a.inject { |sum, n| sum + n })
 puts 'Tests for my inject:'
 print((5..10).to_a.my_inject { |sum, n| sum + n }, "\n")
 print((5..10).to_a.my_inject(1) { |product, n| product * n }, "\n")
@@ -81,3 +83,12 @@ end
 # Tests for multiply_els
 puts 'Tests for multiply_els:'
 print(multiply_els([2, 4, 5]), "\n")
+
+# Tests for my_map with proc
+puts 'Tests for my_map with proc:'
+mult = proc { |n| n * n }
+print(numbers.my_map(mult), "\n")
+
+# Tests for my_map with proc & block
+puts 'Tests for my_map with proc & block:'
+print(numbers.my_map(mult) { |n| n * n }, "\n")

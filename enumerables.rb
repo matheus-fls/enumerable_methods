@@ -6,7 +6,7 @@ module Enumerable
     my_array = to_a
     cont = 0
     while cont < length
-      yield(*my_array[cont])
+      yield(my_array[cont])
       cont += 1
     end
   end
@@ -15,7 +15,7 @@ module Enumerable
     my_array = to_a
     cont = 0
     while cont < length
-      yield(*my_array[cont], cont)
+      yield(my_array[cont], cont)
       cont += 1
     end
   end
@@ -87,12 +87,13 @@ module Enumerable
     end
   end
 
-  def my_map
+  def my_map(proc = nil, &block)
+    block = proc unless proc.nil?
     my_array = to_a
     cont = 0
     result = []
     while cont < length
-      result << yield(*my_array[cont])
+      result << block.call(*my_array[cont])
       cont += 1
     end
     result
@@ -106,7 +107,7 @@ module Enumerable
       cont += 1
     end
     while cont < my_array.length
-      memo = yield(memo, *my_array[cont])
+      memo = yield(memo, my_array[cont])
       cont += 1
     end
     memo
