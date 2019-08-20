@@ -56,13 +56,14 @@ numbers << 2
 puts(numbers.my_count)
 puts(numbers.my_count(2))
 puts(numbers.my_count { |n| (n % 2).zero? })
+puts
 
 # Tests for my_map
-assert_equal(numbers.my_map { |n| n * n }, numbers.map { |n| n * n})
+assert_equal(numbers.my_map { |n| n * n }, numbers.map { |n| n * n })
 puts 'Tests for my_map:'
 print(numbers.my_map { |n| n * n })
 puts
-print((1..4).to_a.map { |i| i * i })
+print((1..4).to_a.map { |i| i * i }, "\n")
 puts
 
 # Tests for my_inject
@@ -74,6 +75,7 @@ longest = %w[cat sheep bear].my_inject do |memo, word|
   memo.length > word.length ? memo : word
 end
 print(longest, "\n")
+puts
 
 # Multiply elements method
 def multiply_els(array)
@@ -83,12 +85,15 @@ end
 # Tests for multiply_els
 puts 'Tests for multiply_els:'
 print(multiply_els([2, 4, 5]), "\n")
+puts
 
 # Tests for my_map with proc
 puts 'Tests for my_map with proc:'
 mult = proc { |n| n * n }
 print(numbers.my_map(mult), "\n")
+puts
 
 # Tests for my_map with proc & block
 puts 'Tests for my_map with proc & block:'
 print(numbers.my_map(mult) { |n| n * n }, "\n")
+puts

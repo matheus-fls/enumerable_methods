@@ -66,25 +66,22 @@ module Enumerable
     result.length.zero?
   end
 
-  def my_count(value = nil)
+  def my_count(value = nil, &block)
+    return length if value.nil? && !block_given?
+
+    filter = if block_given?
+               block
+             else
+               proc { |n| n == value }
+             end
     my_array = to_a
     cont = 0
     result = []
-    if !value.nil?
-      while cont < length
-        result << my_array[cont] if my_array[cont] == value
-        cont += 1
-      end
-      result.length
-    elsif block_given?
-      while cont < length
-        result << my_array[cont] if yield(*my_array[cont])
-        cont += 1
-      end
-      result.length
-    else
-      my_array.length
+    while cont < length
+      result << my_array[cont] if filter.call(my_array[cont])
+      cont += 1
     end
+    result.length
   end
 
   def my_map(proc = nil, &block)
