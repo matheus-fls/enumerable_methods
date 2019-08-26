@@ -2,11 +2,11 @@
 
 require_relative '../enumerables.rb'
 
-arr = [1, 2, 3, 4, 5]
-my_hash = { one: 1, two: 2, three: 3, four: 4 }
-
 # Tests
 RSpec.describe Enumerable do
+  let(:arr) { [1, 2, 3, 4, 5] }
+  let(:my_hash) { { one: 1, two: 2, three: 3, four: 4 } }
+
   describe 'my_select' do
     it 'same as select with array' do
       expect(arr.my_select(&:odd?)).to eql(arr.select(&:odd?))
