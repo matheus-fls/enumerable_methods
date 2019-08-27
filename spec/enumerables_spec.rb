@@ -29,12 +29,14 @@ RSpec.describe Enumerable do
 
     it 'Filters the values from a hash according to a given condition' do
       expect(my_hash.my_select { |_key, value| value.odd? }).to eql(my_hash.select { |_key, value| value.odd? })
+      expect(my_hash.my_select { |_key, value| value.odd? }).to eql(one: 1, three: 3)
     end
   end
 
   describe 'my_all?' do
     it 'Checks if all items in an array comply with a given condition' do
       expect(arr.my_all?(&:positive?)).to eql(arr.all?(&:positive?))
+      expect(arr.my_all?(&:positive?)).not_to eql(false)
     end
 
     it 'Checks if all items in a hash comply with a given condition' do
@@ -45,10 +47,13 @@ RSpec.describe Enumerable do
   describe 'my_any?' do
     it 'Checks if any item in an array complies with a given condition' do
       expect(arr.my_any?(&:negative?)).to eql(arr.any?(&:negative?))
+      expect(arr.my_any?(&:negative?)).to eql(false)
+      expect(arr.my_any?(&:positive?)).not_to eql(false)
     end
 
     it 'Checks if any item in a hash complies with a given condition' do
       expect(my_hash.my_any? { |_key, value| value.negative? }).to eql(my_hash.any? { |_key, value| value.negative? })
+      expect(my_hash.my_any? { |_key, value| value.negative? }).not_to eql(true)
     end
   end
 
@@ -70,10 +75,12 @@ RSpec.describe Enumerable do
 
     it 'Counts all the items in an array' do
       expect(arr.my_count).to eql(arr.count)
+      expect(arr.my_count).to eql(5)
     end
 
     it 'Counts all the items in a hash' do
       expect(my_hash.my_count).to eql(my_hash.count)
+      expect(my_hash.my_count).to eql(4)
     end
   end
 
@@ -85,14 +92,17 @@ RSpec.describe Enumerable do
       expect(my_hash.my_map { |_, x| x**2 }).to eql(my_hash.map { |_, x| x**2 })
     end
   end
-
+  # rubocop:disable Style/Semicolon
   describe 'my_inject' do
     it 'Calculates the sum of the squares of the numbers in the array' do
       expect(arr.my_inject { |acc, x| acc + x**2 }).to eql(arr.inject { |acc, x| acc + x**2 })
+      expect(arr.my_inject(arr.clone) { |acc, x| acc.delete(x); acc }).to eql([])
     end
     it 'Converts a hash to an indexed list of key values' do
-      expect(my_hash.my_inject([]) { |acc, pair| acc[pair.last] = pair.first; acc }) # rubocop:disable Style/Semicolon
-        .to eql(my_hash.inject([]) { |acc, pair| acc[pair.last] = pair.first; acc }) # rubocop:disable Style/Semicolon
+      # rubocop:disable Style/EachWithObject
+      expect(my_hash.my_inject([]) { |acc, pair| acc[pair.last] = pair.first; acc })
+        .to eql(my_hash.inject([]) { |acc, pair| acc[pair.last] = pair.first; acc })
+      # rubocop:enable Style/Semicolon, Style/EachWithObject
     end
   end
 end
