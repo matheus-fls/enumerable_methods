@@ -7,9 +7,24 @@ RSpec.describe Enumerable do
   let(:arr) { [1, 2, 3, 4, 5] }
   let(:my_hash) { { one: 1, two: 2, three: 3, four: 4 } }
 
+  describe 'my_each' do
+    it 'travels the array, one element at a time' do
+      enum = arr.each
+      arr.my_each { |parm| expect(parm).to eql(enum.next) }
+    end
+  end
+
+  describe 'my_each_with_index' do
+    it 'travels the array, one element at a time, with index' do
+      enum = arr.each_with_index
+      arr.my_each_with_index { |*parms| expect(parms).to eql(enum.next) }
+    end
+  end
+
   describe 'my_select' do
     it 'Filters the values from an array according to a given condition' do
       expect(arr.my_select(&:odd?)).to eql(arr.select(&:odd?))
+      expect(arr.my_select(&:odd?)).not_to eql([2, 4])
     end
 
     it 'Filters the values from a hash according to a given condition' do
@@ -34,6 +49,13 @@ RSpec.describe Enumerable do
 
     it 'Checks if any item in a hash complies with a given condition' do
       expect(my_hash.my_any? { |_key, value| value.negative? }).to eql(my_hash.any? { |_key, value| value.negative? })
+    end
+  end
+
+  describe 'my_none?' do
+    it 'Checks if none of the items in an array complies with a given condition' do
+      expect(arr.my_none?(&:negative?)).not_to eql(false)
+      expect(arr.my_none?(&:positive?)).to eql(false)
     end
   end
 
